@@ -1,6 +1,6 @@
 /* This is the console executable that makes use of the BullCow Class
 This acts as the view in a MVC pattern, and is responsible for all
-user interafction. For game logic, see the FBullCowGame class.
+user interaction. For game logic, see the FBullCowGame class.
 */
 
 #include <iostream>
@@ -24,7 +24,7 @@ int main()
 	{
 		PrintIntro();
 		PlayGame();
-		bPlayAgain = AskToPlayAgain();
+		bPlayAgain = AskToPlayAgain(); // boolean value of play again is set by play again function
 	}
 	while (bPlayAgain);
 
@@ -42,15 +42,16 @@ void PrintIntro()
 
 void PlayGame()
 {
-	BCGame.Reset();
+	BCGame.Reset(); // Reset the game to defaults
 	int32 MaxTries = BCGame.GetMaxTries();
 
 	// loop for the number of turns asking for guesses
-	// TODO change from FOR to WHILE loop once done validating tries
-	for (int32 i = 1; i <= MaxTries; i++)
+	for (int32 i = 1; i <= MaxTries; i++) // TODO change from FOR to WHILE loop once done validating tries
 	{
-		FText Guess = GetGuess(); // TODO make loop checking valid
+		FText Guess = GetGuess();
 		
+		EGuessStatus Status = BCGame.CheckGuessValidity(Guess);
+
 		// submit valid guess to the game, and receive counts
 		FBullCowCount BullCowCount = BCGame.SubmitGuess(Guess);
 		// Print number of bulls and cows
@@ -62,7 +63,7 @@ void PlayGame()
 	// TODO add a game summary
 }
 
-FText GetGuess()
+FText GetGuess() // TODO change to get valid guess
 {
 	int32 CurrentTry = BCGame.GetCurrentTry();
 

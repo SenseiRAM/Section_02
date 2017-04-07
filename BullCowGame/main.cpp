@@ -12,7 +12,7 @@ using int32 = int;
 
 void PrintIntro();
 void PlayGame();
-FText GetGuess();
+FText GetGuess(); //comment
 bool AskToPlayAgain();
 
 FBullCowGame BCGame; // instantiate a new game

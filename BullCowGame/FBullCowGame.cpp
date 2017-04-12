@@ -18,7 +18,7 @@ bool FBullCowGame::IsGameWon() const { return bGameWon; }
 void FBullCowGame::Reset() // resets all game defaults
 {
 	constexpr int32 MAX_TRIES = 8;
-	const FString HIDDEN_WORD = "fart";
+	const FString HIDDEN_WORD = "glom";
 	
 	MyMaxTries = MAX_TRIES;
 	MyHiddenWord = HIDDEN_WORD;

@@ -8,6 +8,7 @@ FBullCowGame::FBullCowGame()
 	Reset();
 }
 
+//Getter functions up top
 int32 FBullCowGame::GetMaxTries() const { return MyMaxTries; }
 int32 FBullCowGame::GetCurrentTry() const { return MyCurrentTry; }
 int32 FBullCowGame::GetHiddenWordLength() const { return MyHiddenWord.length(); }
@@ -28,9 +29,9 @@ void FBullCowGame::Reset() // resets all game defaults
 
 EGuessStatus FBullCowGame::CheckGuessValidity(FString Guess) const
 {
-	if (false) // if guess isn't isogram TODO function to check isogram
+	if (!IsIsogram(Guess))
 	{
-		return EGuessStatus::Not_Isogram;
+		return EGuessStatus::Not_Isogram; // if guess isn't lowercase
 	}
 	else if (false)// if guess isn't lowercase // TODO write function to check lowercase
 	{
@@ -82,4 +83,18 @@ FBullCowCount FBullCowGame::SubmitValidGuess(FString Guess)
 		bGameWon = false;
 	}
 	return BullCowCount; // give back the variable which contains both bulls and cows
+}
+
+bool FBullCowGame::IsIsogram(FString Word) const
+{ 
+	// treat 0 and 1 letter words as isograms
+	
+	// for loop to iterate through letters of the guess
+		// check letters against table
+		// if letter is in the map
+			// NOT an isogram
+		// else
+			// add the letter to the map as seen
+
+	return true; // for example in cases where /0 is entered
 }

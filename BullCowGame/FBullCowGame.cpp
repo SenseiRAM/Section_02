@@ -28,11 +28,11 @@ void FBullCowGame::Reset() // resets all game defaults
 
 EGuessStatus FBullCowGame::CheckGuessValidity(FString Guess) const
 {
-	if (false) // if guess isn't isogram
+	if (false) // if guess isn't isogram TODO function to check isogram
 	{
 		return EGuessStatus::Not_Isogram;
 	}
-	else if (false)// if guess isn't lowercase
+	else if (false)// if guess isn't lowercase // TODO write function to check lowercase
 	{
 		return EGuessStatus::Not_Lowercase;
 	}

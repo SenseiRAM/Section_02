@@ -17,11 +17,17 @@ int32 FBullCowGame::GetCurrentTry() const { return MyCurrentTry; }
 int32 FBullCowGame::GetHiddenWordLength() const { return MyHiddenWord.length(); }
 bool FBullCowGame::IsGameWon() const { return bGameWon; }
 
+void FBullCowGame::AskWordLength(int32 Number)
+{
+	WordDifficulty = Number;
+	return;
+}
+
 // returns correct word based on length chosen by user
 FString FBullCowGame::InitWordLength() const
 {
 	TMap <int32, FString> NumberOfLetters{ { 3, "car" },{ 4, "glom" },{ 5, "plane" },{ 6, "flunks" } };
-	return NumberOfLetters[AskWordLength];
+	return NumberOfLetters[WordDifficulty];
 }
 
 // maximum number of tries based on word length chosen

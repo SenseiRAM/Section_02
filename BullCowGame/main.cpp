@@ -61,7 +61,7 @@ void GetInitWord()
 		std::cin >> NumberOfLetters;
 		std::cin.clear();
 		std::cin.ignore(10000, '\n');
-		BCGame.AskWordLength = NumberOfLetters;
+		BCGame.AskWordLength(NumberOfLetters);
 	} while (NumberOfLetters < 3 || NumberOfLetters > 6);
 	return;
 }

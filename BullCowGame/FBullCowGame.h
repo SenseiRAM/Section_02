@@ -1,12 +1,16 @@
+/*
+The game logic (no view or user interaction). The game is a simple word game similar to Mastermind.
+*/
+
 #pragma once
 #include <string>
 #include <map>
 #define TMap std::map
 
+// to make code friendly for Unreal Engine
 using FString = std::string;
 using int32 = int;
 
-// initializes all values to 0
 struct FBullCowCount
 {
 	int32 Bulls = 0;
@@ -25,9 +29,15 @@ enum EGuessStatus
 class FBullCowGame
 {
 public:
+	/*
+	See function definitions for explanation
+	*/
+	
 	FBullCowGame(); // refer to constructor
 
-	
+	int32 AskWordLength; // Set by user in main
+
+	FString InitWordLength() const;
 	int32 GetMaxTries() const;
 	int32 GetCurrentTry() const;
 	int32 GetHiddenWordLength() const;
@@ -35,20 +45,15 @@ public:
 	bool IsGameWon() const;
 	EGuessStatus CheckGuessValidity(FString) const;
 	
-	void Reset(); // TODO make a more rich return value
-	// counts bulls and cows, and increases turn number, assuming valid guess
+	void Reset();
 	FBullCowCount SubmitValidGuess(FString Guess);
 
-
-	
-// Ignore this and focus on interface
 private:
 	// See constructor for initialization
 	int32 MyCurrentTry;
-	int32 MyMaxTries;
 	FString MyHiddenWord;
+	
 	bool bGameWon;
-
 	bool IsIsogram(FString) const;
 	bool IsLowercase(FString) const;
 };

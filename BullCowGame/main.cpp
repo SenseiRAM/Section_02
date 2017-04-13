@@ -3,16 +3,19 @@ This acts as the view in a MVC pattern, and is responsible for all
 user interaction. For game logic, see the FBullCowGame class.
 */
 
+#pragma once
 #include <iostream>
 #include <string>
 #include "FBullCowGame.h"
 #include <map>
 #define TMap std::map
 
+// to make syntax work with Unreal Engine
 using FText = std::string;
 using int32 = int;
 
 void PrintIntro();
+void GetInitWord();
 void PlayGame();
 FText GetValidGuess();
 void PrintGameSummary();
@@ -26,6 +29,7 @@ int main()
 	do
 	{
 		PrintIntro();
+		GetInitWord();
 		PlayGame();
 		bPlayAgain = AskToPlayAgain(); // boolean value of play again is set by play again function
 	}
@@ -43,14 +47,30 @@ void PrintIntro()
 	std::cout << " /- - -\\  /            - - -\\ /   " << std::endl;
 	std::cout << "/ |    |              / |   |" << std::endl;
 	
-	std::cout << "Can you guess the " << BCGame.GetHiddenWordLength();
-	std::cout << " letter isogram I'm thinking of?\n";
+	std::cout << "Can you guess the isogram I'm thinking of?\n";
 	return;
 }
 
+// Function that gets number of letters for the hidden word from user
+void GetInitWord()
+{
+	int32 NumberOfLetters;
+	do
+	{
+		std::cout << "Would you like to guess a 3, 4, 5, or 6 letter word? (Enter 3, 4, 5, or 6)";
+		std::cin >> NumberOfLetters;
+		std::cin.clear();
+		std::cin.ignore(10000, '\n');
+		BCGame.AskWordLength = NumberOfLetters;
+	} while (NumberOfLetters < 3 || NumberOfLetters > 6);
+	return;
+}
+
+// plays a single game to completion once user selects word length
 void PlayGame()
 {
 	BCGame.Reset(); // Reset the game to defaults
+
 	int32 MaxTries = BCGame.GetMaxTries();
 
 	// loop asking for guesses while game is NOT won
@@ -121,7 +141,7 @@ FText GetValidGuess()
 
 bool AskToPlayAgain()
 {
-	std::cout << "Do you want to play again with the same hidden word? (y / n)";
+	std::cout << "Do you want to play again? (y / n)";
 	FText Response = "";
 	std::getline(std::cin, Response);
 

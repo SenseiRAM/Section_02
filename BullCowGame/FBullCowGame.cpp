@@ -1,5 +1,9 @@
+#pragma once
 #include "FBullCowGame.h"
+#include <map>
 
+// used to make syntax Unreal Engine friendly
+#define TMap std::map
 using int32 = int;
 
 // this is the constructor, which sets starting values using the Reset() function
@@ -8,25 +12,34 @@ FBullCowGame::FBullCowGame()
 	Reset();
 }
 
-//Getter functions up top
-int32 FBullCowGame::GetMaxTries() const { return MyMaxTries; }
+// Getter functions
 int32 FBullCowGame::GetCurrentTry() const { return MyCurrentTry; }
 int32 FBullCowGame::GetHiddenWordLength() const { return MyHiddenWord.length(); }
 bool FBullCowGame::IsGameWon() const { return bGameWon; }
 
+// returns correct word based on length chosen by user
+FString FBullCowGame::InitWordLength() const
+{
+	TMap <int32, FString> NumberOfLetters{ { 3, "car" },{ 4, "glom" },{ 5, "plane" },{ 6, "flunks" } };
+	return NumberOfLetters[AskWordLength];
+}
+
+// maximum number of tries based on word length chosen
+int32 FBullCowGame::GetMaxTries() const
+{
+	TMap <int32, int32> WordLengthToMaxTries{ {3, 6}, {4, 7}, {5, 10}, {6, 15} };
+	return WordLengthToMaxTries[MyHiddenWord.length()];
+}
 
 void FBullCowGame::Reset() // resets all game defaults
 {
-	constexpr int32 MAX_TRIES = 8;
-	const FString HIDDEN_WORD = "glom";
-	
-	MyMaxTries = MAX_TRIES;
-	MyHiddenWord = HIDDEN_WORD;
+	MyHiddenWord = InitWordLength();
 	MyCurrentTry = 1;
 	bGameWon = false;
 	return;
 }
 
+// return values to pass into valid guess switch statement in main
 EGuessStatus FBullCowGame::CheckGuessValidity(FString Guess) const
 {
 	if (!IsIsogram(Guess))
@@ -63,7 +76,7 @@ FBullCowCount FBullCowGame::SubmitValidGuess(FString Guess)
 			// if letters match
 			if (Guess[GChar] == MyHiddenWord[MHWChar])
 			{
-				if (MHWChar == GChar) // if they're in the same place
+				if (MHWChar == GChar) // if guess letter is in same position as hidden word letter
 				{
 					BullCowCount.Bulls++;
 				}
@@ -74,7 +87,7 @@ FBullCowCount FBullCowGame::SubmitValidGuess(FString Guess)
 			}
 		}
 	}
-	if (BullCowCount.Bulls == WordLength)
+	if (BullCowCount.Bulls == WordLength) // if number of bulls is same as overall word length YOU WIN
 	{
 		bGameWon = true;
 	}
@@ -85,6 +98,7 @@ FBullCowCount FBullCowGame::SubmitValidGuess(FString Guess)
 	return BullCowCount; // give back the variable which contains both bulls and cows
 }
 
+// helper function to determine if user guess is isogram
 bool FBullCowGame::IsIsogram(FString Guess) const
 { 
 	// treat 0 and 1 letter words as isograms
@@ -105,9 +119,10 @@ bool FBullCowGame::IsIsogram(FString Guess) const
 		}
 	}
 
-	return true; // for example in cases where /0 is entered
+	return true; // for example in cases where \0 is entered
 }
 
+// helper function to determine if word is all lowercase
 bool FBullCowGame::IsLowercase(FString Guess) const
 {
 	for (auto Letter : Guess) // for all letters of the word

@@ -35,8 +35,7 @@ public:
 	
 	FBullCowGame(); // refer to constructor
 
-	int32 AskWordLength; // Set by user in main
-
+	void AskWordLength(int32);
 	FString InitWordLength() const;
 	int32 GetMaxTries() const;
 	int32 GetCurrentTry() const;
@@ -53,6 +52,7 @@ private:
 	int32 MyCurrentTry;
 	FString MyHiddenWord;
 	
+	int32 WordDifficulty;
 	bool bGameWon;
 	bool IsIsogram(FString) const;
 	bool IsLowercase(FString) const;
